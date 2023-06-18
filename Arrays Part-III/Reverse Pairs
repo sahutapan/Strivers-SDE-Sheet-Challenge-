@@ -1,0 +1,56 @@
+#include <bits/stdc++.h> 
+
+int solve(vector<int> &arr,int low,int mid,int high)
+{
+	int c=0;
+	int right=mid+1;
+	for(int i=low;i<=mid;i++)
+	{
+		while(right<=high && arr[i]>2*arr[right])
+			right++;
+		c+=(right-(mid+1));
+	}
+	return c;
+}
+void merge(vector<int> &arr,int low,int mid,int high)
+{
+	vector<int> t;
+	int i=low,j=mid+1;
+	while(i<=mid && j<=high)
+	{
+		if(arr[i]<=arr[j])
+			t.push_back(arr[i++]);
+		else
+			t.push_back(arr[j++]);
+	}
+	while(i<=mid)
+		t.push_back(arr[i++]);
+	while(j<=high)
+		t.push_back(arr[j++]);
+	i=low;
+	j=mid+1;
+	int k=0;
+	while(i<=mid)
+		arr[i++]=t[k++];
+	while(j<=high)
+		arr[j++]=t[k++];
+}
+int mergesort(vector<int> &arr,int low,int high)
+{
+	int c=0;
+	if(low<high)
+	{
+		int mid=low+(high-low)/2;
+		c+=mergesort(arr,low,mid);
+		c+=mergesort(arr,mid+1,high);
+		c+=solve(arr,low,mid,high);
+		merge(arr,low,mid,high);
+		return c;
+	}
+	return c;
+}
+int reversePairs(vector<int> &arr, int n){
+	// Write your code here.
+	
+	return mergesort(arr,0,n-1);
+}
