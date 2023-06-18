@@ -1,0 +1,26 @@
+#include <bits/stdc++.h>
+
+
+
+vector<vector<int>> pairSum(vector<int> &arr, int s){
+   // Write your code here.
+   map<int,int> mp;
+   vector<vector<int>> ans;
+   
+   for(auto x:arr)
+   {
+      int y=s-x;
+      if(mp.find(y)!=mp.end())
+      {
+         int val=mp[y];
+         while(val--)
+         {
+           ans.push_back({min(x, y), max(x, y)});
+         }
+      }
+      mp[x]++;      
+   }
+   sort(ans.begin(),ans.end());
+   return ans;
+
+}
