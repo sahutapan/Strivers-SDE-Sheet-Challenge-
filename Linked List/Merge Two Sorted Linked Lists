@@ -1,0 +1,24 @@
+
+Node<int>* sortTwoLists(Node<int>* l1, Node<int>* l2)
+{
+    if(!l1) return l2;
+    if(!l2) return l1;
+    if(l1->data > l2->data) swap(l2,l1);
+
+    Node<int> *res=l1;
+
+    while(l1 && l2)
+    {
+        Node<int> *prev=nullptr;
+        while(l1 && l1->data <= l2->data)
+        {
+            prev=l1;
+            l1=l1->next;
+        }
+
+        prev->next=l2;
+        swap(l1,l2);
+    }
+
+    return res;
+}
